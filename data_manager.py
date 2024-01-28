@@ -1,26 +1,32 @@
 import requests
-from pprint import pprint
+
+sheety_url = "https://api.sheety.co/e76501e944cf045c8721dd7fcbb75a9f/myFlightDeals/prices"
+
+
 class DataManager:
-    #This class is responsible for talking to the Google Sheet.
-    sheety_url = "https://api.sheety.co/e76501e944cf045c8721dd7fcbb75a9f/myFlightDeals/prices"
+    #This class is responsible for talking to the Google Sheet.    
+    
+    def __init__(self) -> None:
+        self.sheety_data = {}
 
-    def get_sheety_data(api_url):
-        try:
-            response = requests.get(api_url)
-            response.raise_for_status()  # Raise an HTTPError for bad responses
-
-            # Assuming Sheety returns JSON data
-            data = response.json()
-
-            return data, api_url
-
-        except requests.exceptions.RequestException as e:
-            print(f"Error: {e}")
-            return None, api_url
-
-    # Example usage
-    sheety_data, sheety_url = get_sheety_data(sheety_url)
-
-    if sheety_data:
-        print("Sheety Data:")
-        pprint(sheety_data)
+    def get_sheety_data(self):
+        response = requests.get(sheety_url)
+        data = response.json()
+        self.sheety_data = data['prices']
+        return self.sheety_data
+    
+    def set_sheety_data(self):
+        for city in self.sheety_data:
+            body = {
+                "price": {
+                    "iataCode": city["iataCode"]
+                }
+            }
+            response = requests.put(
+                f"{sheety_url}/{city['id']}",
+                json=body,  
+                headers={
+                    "Content-Type": "application/json"  # Set the Content-Type header explicitly
+                }
+            )
+            print(response.text)
