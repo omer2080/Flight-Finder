@@ -11,7 +11,7 @@ print(sheet_data)
 for row in sheet_data:
     if 'iataCode' in row and not row['iataCode']:
         from flight_search import FlightSearch as FS
-        row['iataCode'] = FS.city_tester(row['iataCode'])
+        row['iataCode'] = FS.city_code_update(row['city'])
 
 DataManager.set_sheety_data(data_manager_instance)
            
