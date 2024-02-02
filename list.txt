@@ -1,0 +1,8 @@
+in case of error in getting the flight info (because of 'monthly quota has been reached'),
+here is the data needed:
+
+before adding 'iataCode': 
+[{'city': 'Amsterdam', 'iataCode': '', 'lowestPrice': 130, 'id': 2}, {'city': 'Athens', 'iataCode': '', 'lowestPrice': 90, 'id': 3}, {'city': 'Bangkok', 'iataCode': '', 'lowestPrice': 600, 'id': 4}, {'city': 'Budapest', 'iataCode': '', 'lowestPrice': 60, 'id': 5}, {'city': 'Lisbon', 'iataCode': '', 'lowestPrice': 130, 'id': 6}, {'city': 'London', 'iataCode': '', 'lowestPrice': 90, 'id': 7}, {'city': 'Madrid', 'iataCode': '', 'lowestPrice': 90, 'id': 8}, {'city': 'Prague', 'iataCode': '', 'lowestPrice': 70, 'id': 9}, {'city': 'Rome', 'iataCode': '', 'lowestPrice': 70, 'id': 10}, {'city': 'Sydney', 'iataCode': '', 'lowestPrice': 750, 'id': 11}]}
+
+after adding 'iataCode':
+[{'city': 'Amsterdam', 'iataCode': '', 'lowestPrice': 130, 'id': 2}, {'city': 'Athens', 'iataCode': '', 'lowestPrice': 90, 'id': 3}, {'city': 'Bangkok', 'iataCode': '', 'lowestPrice': 600, 'id': 4}, {'city': 'Budapest', 'iataCode': '', 'lowestPrice': 60, 'id': 5}, {'city': 'Lisbon', 'iataCode': '', 'lowestPrice': 130, 'id': 6}, {'city': 'London', 'iataCode': '', 'lowestPrice': 90, 'id': 7}, {'city': 'Madrid', 'iataCode': '', 'lowestPrice': 90, 'id': 8}, {'city': 'Prague', 'iataCode': '', 'lowestPrice': 70, 'id': 9}, {'city': 'Rome', 'iataCode': '', 'lowestPrice': 70, 'id': 10}, {'city': 'Sydney', 'iataCode': '', 'lowestPrice': 750, 'id': 11}]
