@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 
 from flight_data import FlightData
 
-
 load_dotenv()
 
 tequila_url = "https://tequila-api.kiwi.com"
@@ -14,7 +13,7 @@ class FlightSearch:
     #This class is responsible for talking to the Flight Search API.
     
     #The function returns the IATA code of the city 
-    def city_code_update(city_name):
+    def city_code_provider(city_name):
         data_url = f"{tequila_url}/locations/query"
         headers = {"apikey": my_api}
         params = {"term": city_name, "location_types": "city"}

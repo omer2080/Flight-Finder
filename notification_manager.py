@@ -1,36 +1,24 @@
 from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-import getpass
 import random
-from flight_data import FlightData
 import smtplib
-from dotenv import load_dotenv
+from email.mime.text import MIMEText
+from flight_data import FlightData
 
-load_dotenv()
 
 HOST = "smtp-mail.outlook.com"
 PORT = 587
 
 FROM_EMAIL = "omer2080101@outlook.co.il"
-PASSWORD = getpass.getpass("Enter The Mail Password: ")
 TO_EMAIL_1 = "omer208010@gmail.com"
 TO_EMAIL_2 = "romy.attar@gmail.com"
 
-set_of_sentences = ["Your Unbeatable Deal Awaits!",
+list_of_sentences = ["Your Unbeatable Deal Awaits!",
                     "Found Your Next Vacation!",
                     "Unforgettable Adventure Awaits!",
                     "Uncovered Your Ideal Vacation!",
                     "Your ideal Getaway Located!",
                     "Unbeatable deals on your radar!"
                     ]
-
-
-message = MIMEMultipart("alternative")
-message['Subject'] = "YOUR NEXT FLIGHT HAS BEEN FOUND"
-message['From'] = FROM_EMAIL
-message['To'] = TO_EMAIL_1
-message['Cc'] = FROM_EMAIL
-message['Bcc'] = FROM_EMAIL
 
 class NotificationManager:
     #This class is responsible for sending notifications with the deal flight details.
@@ -42,36 +30,41 @@ class NotificationManager:
         self.depart_date = data.depart_date
         self.return_date = data.return_date
         
-    def mail_sender(self):
+    def mail_sender(self, PASSWORD):
         # Read HTML content from file
         with open("mail.html", "r") as file:
             html_content = file.read()
 
         # Substitute actual values into the placeholders
         formatted_message = html_content.format(
-            price=self.price,
-            destination_city=self.destination_city,
-            destination_airport=self.destination_airport,
-            depart_date=self.depart_date,
-            return_date=self.return_date,
-            random_phrase = random.choice(set_of_sentences)
+            price = self.price,
+            destination_city = self.destination_city,
+            destination_airport = self.destination_airport,
+            depart_date = self.depart_date,
+            return_date = self.return_date,
+            random_phrase = random.choice(list_of_sentences)
 
         )
-                
+        
+        # Create a MIMEMultipart message
+        message = MIMEMultipart("alternative")
+        message['Subject'] = "YOUR NEXT FLIGHT HAS BEEN FOUND"
+
+        # Attach HTML-formatted content to the email message
         html_part = MIMEText(formatted_message, 'html')
         message.attach(html_part)
-    
-        smtp = smtplib.SMTP(HOST, PORT)
-        status_code, response = smtp.ehlo()
-        #print(f"[*] Echoing the server: {status_code}{response}")
-        status_code, response = smtp.starttls()
-        #print(f"[*] Starting TLS connection: {status_code}{response}")
-        status_code, response = smtp.login(FROM_EMAIL, PASSWORD)
-        #print(f"[*] Logging in: {status_code}{response}")
 
+        #connecting to the Outlook SMTP server
+        smtp = smtplib.SMTP(HOST, PORT)
+        
+        #upgrade the connection to a secure TLS (Transport Layer Security) or SSL (Secure Sockets Layer) connection.
+        smtp.starttls()
+        
+        #authenticate the user
+        smtp.login(FROM_EMAIL, PASSWORD)
 
         smtp.sendmail(FROM_EMAIL, TO_EMAIL_1, message.as_string())
-        smtp.sendmail(FROM_EMAIL, TO_EMAIL_2, message.as_string())
+        # smtp.sendmail(FROM_EMAIL, TO_EMAIL_2, message.as_string())
         
         smtp.quit()
 

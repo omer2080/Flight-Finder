@@ -5,14 +5,12 @@ sheety_url = "https://api.sheety.co/e76501e944cf045c8721dd7fcbb75a9f/myFlightDea
 
 class DataManager:
     #This class is responsible for talking to the Google Sheet.    
-    
     def __init__(self) -> None:
         self.sheety_data = {}
 
     def get_sheety_data(self):
         response = requests.get(sheety_url)
         data = response.json()
-        print(data)
         self.sheety_data = data['prices']
         return self.sheety_data
     
