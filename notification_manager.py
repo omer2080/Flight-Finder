@@ -1,6 +1,7 @@
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import getpass
+import random
 from flight_data import FlightData
 import smtplib
 from dotenv import load_dotenv
@@ -13,7 +14,16 @@ PORT = 587
 FROM_EMAIL = "omer2080101@outlook.co.il"
 PASSWORD = getpass.getpass("Enter The Mail Password: ")
 TO_EMAIL_1 = "omer208010@gmail.com"
-# TO_EMAIL_2 = "romy.attar@gmail.com"
+TO_EMAIL_2 = "romy.attar@gmail.com"
+
+set_of_sentences = ["Your Unbeatable Deal Awaits!",
+                    "Found Your Next Vacation!",
+                    "Unforgettable Adventure Awaits!",
+                    "Uncovered Your Ideal Vacation!",
+                    "Your ideal Getaway Located!",
+                    "Unbeatable deals on your radar!"
+                    ]
+
 
 message = MIMEMultipart("alternative")
 message['Subject'] = "YOUR NEXT FLIGHT HAS BEEN FOUND"
@@ -43,9 +53,11 @@ class NotificationManager:
             destination_city=self.destination_city,
             destination_airport=self.destination_airport,
             depart_date=self.depart_date,
-            return_date=self.return_date
+            return_date=self.return_date,
+            random_phrase = random.choice(set_of_sentences)
+
         )
-        
+                
         html_part = MIMEText(formatted_message, 'html')
         message.attach(html_part)
     
@@ -59,7 +71,7 @@ class NotificationManager:
 
 
         smtp.sendmail(FROM_EMAIL, TO_EMAIL_1, message.as_string())
-        # smtp.sendmail(FROM_EMAIL, TO_EMAIL_2, formatted_message)
+        smtp.sendmail(FROM_EMAIL, TO_EMAIL_2, message.as_string())
         
         smtp.quit()
 
