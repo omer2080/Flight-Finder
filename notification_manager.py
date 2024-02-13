@@ -4,13 +4,14 @@ import smtplib
 from email.mime.text import MIMEText
 from flight_data import FlightData
 
-
 HOST = "smtp-mail.outlook.com"
 PORT = 587
 
 FROM_EMAIL = "omer2080101@outlook.co.il"
 TO_EMAIL_1 = "omer208010@gmail.com"
 TO_EMAIL_2 = "romy.attar@gmail.com"
+
+KIWI_STARTING_LINK = "https://www.kiwi.com/en/booking?booking_token="
 
 list_of_sentences = ["Your Unbeatable Deal Awaits!",
                     "Found Your Next Vacation!",
@@ -29,6 +30,8 @@ class NotificationManager:
         self.destination_airport = data.destination_airport
         self.depart_date = data.depart_date
         self.return_date = data.return_date
+        self.flight_link = data.flight_link
+        
         
     def mail_sender(self, PASSWORD):
         # Read HTML content from file
@@ -42,7 +45,8 @@ class NotificationManager:
             destination_airport = self.destination_airport,
             depart_date = self.depart_date,
             return_date = self.return_date,
-            random_phrase = random.choice(list_of_sentences)
+            random_phrase = random.choice(list_of_sentences),
+            flight_link = KIWI_STARTING_LINK + self.flight_link
 
         )
         

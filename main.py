@@ -21,20 +21,20 @@ currency = "USD"
 
 
 # UNCOMMENT THE NEXT LINE IF YOU HAVE A QUOTA LIMIT ERROR (it might happen if we send too many API requests):
-# sheet_data = [{'city': 'Amsterdam', 'iataCode': 'AMS', 'lowestPrice': 130, 'id': 2}, {'city': 'Athens', 'iataCode': 'ATH', 'lowestPrice': 100, 'id': 3}, {'city': 'Bangkok', 'iataCode': 'BKK', 'lowestPrice': 650, 'id': 4}, {'city': 'Budapest', 'iataCode': 'BUD', 'lowestPrice': 60, 'id': 5}, {'city': 'Lisbon', 'iataCode': 'LIS', 'lowestPrice': 130, 'id': 6}, {'city': 'London', 'iataCode': 'LON', 'lowestPrice': 90, 'id': 7}, {'city': 'Madrid', 'iataCode': 'MAD', 'lowestPrice': 90, 'id': 8}, {'city': 'Prague', 'iataCode': 'PRG', 'lowestPrice': 70, 'id': 9}, {'city': 'Rome', 'iataCode': 'ROM', 'lowestPrice': 70, 'id': 10}, {'city': 'Sydney', 'iataCode': 'SYD', 'lowestPrice': 750, 'id': 11}]
+sheet_data = [{'city': 'Amsterdam', 'iataCode': 'AMS', 'lowestPrice': 130, 'id': 2}, {'city': 'Athens', 'iataCode': 'ATH', 'lowestPrice': 200, 'id': 3}, {'city': 'Bangkok', 'iataCode': 'BKK', 'lowestPrice': 650, 'id': 4}, {'city': 'Budapest', 'iataCode': 'BUD', 'lowestPrice': 60, 'id': 5}, {'city': 'Lisbon', 'iataCode': 'LIS', 'lowestPrice': 130, 'id': 6}, {'city': 'London', 'iataCode': 'LON', 'lowestPrice': 90, 'id': 7}, {'city': 'Madrid', 'iataCode': 'MAD', 'lowestPrice': 90, 'id': 8}, {'city': 'Prague', 'iataCode': 'PRG', 'lowestPrice': 70, 'id': 9}, {'city': 'Rome', 'iataCode': 'ROM', 'lowestPrice': 70, 'id': 10}, {'city': 'Sydney', 'iataCode': 'SYD', 'lowestPrice': 750, 'id': 11}]
 
 # if you uncommented the previous line - put in comment the whole next part (all until next printing)
 
-data_manager_instance = DataManager()
-sheet_data = DataManager.get_sheety_data(data_manager_instance)
-print(f'\nMy Flight Deals Without IataCode:\n{sheet_data}')
+# data_manager_instance = DataManager()
+# sheet_data = DataManager.get_sheety_data(data_manager_instance)
+# print(f'\nMy Flight Deals Without IataCode:\n{sheet_data}')
 
-for row in sheet_data:
-    if 'iataCode' in row and not row['iataCode']:
-        from flight_search import FlightSearch as FS
-        row['iataCode'] = FS.city_code_provider(row['city'])
+# for row in sheet_data:
+#     if 'iataCode' in row and not row['iataCode']:
+#         from flight_search import FlightSearch as FS
+#         row['iataCode'] = FS.city_code_provider(row['city'])
 
-DataManager.set_sheety_data(data_manager_instance)
+# DataManager.set_sheety_data(data_manager_instance)
            
 print(f'\nMy Flight Deals After Filling IataCode:\n{sheet_data}')
 
@@ -50,7 +50,7 @@ for location in sheet_data:
         fly_date_to,
         stopovers,
         currency,
-        location['lowestPrice']
+        location['lowestPrice'],
     )
     #sending a mail with details about the flight
     from notification_manager import NotificationManager
