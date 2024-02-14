@@ -62,7 +62,7 @@ class FlightSearch:
             return_date = flight_data_list["route"][1]["local_departure"].split("T")[0],
             flight_link = flight_data_list["booking_token"]
         )
-        print(f"{flight_data.destination_city}: ${flight_data.price} : {flight_data.flight_link}")
+        print(f"{flight_data.destination_city}: ${flight_data.price}")
         return flight_data
     
     

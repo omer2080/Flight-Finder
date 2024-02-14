@@ -13,13 +13,25 @@ TO_EMAIL_2 = "romy.attar@gmail.com"
 
 KIWI_STARTING_LINK = "https://www.kiwi.com/en/booking?booking_token="
 
-list_of_sentences = ["Your Unbeatable Deal Awaits!",
-                    "Found Your Next Vacation!",
-                    "Unforgettable Adventure Awaits!",
-                    "Uncovered Your Ideal Vacation!",
-                    "Your ideal Getaway Located!",
-                    "Unbeatable deals on your radar!"
-                    ]
+list_of_sentences = [
+    "Your Unbeatable Deal Awaits!",
+    "Found Your Next Vacation!",
+    "Unforgettable Adventure Awaits!",
+    "Uncovered Your Ideal Vacation!",
+    "Your Ideal Getaway Located!",
+    "Unbeatable Deals on Your Radar!",
+    "Discover Your Dream Destination!",
+    "Embark on a Journey of a Lifetime!",
+    "Unlock Your Ultimate Vacation!",
+    "Find Your Paradise Getaway!",
+    "Adventure Awaits, Start Booking!",
+    "Your Next Adventure Begins Here!",
+    "Your Passport to Excitement!",
+    "Book Now for Unbelievable Savings!",
+    "Ready for a Journey? Start Here!",
+    "Uncover Hidden Gems in Every Deal!"
+]
+
 
 class NotificationManager:
     #This class is responsible for sending notifications with the deal flight details.
@@ -46,9 +58,7 @@ class NotificationManager:
             depart_date = self.depart_date,
             return_date = self.return_date,
             random_phrase = random.choice(list_of_sentences),
-            flight_link = KIWI_STARTING_LINK + self.flight_link
-
-        )
+            flight_link = f'<a href="{KIWI_STARTING_LINK + self.flight_link}" style="text-decoration: none; color: #333333;">Book Now</a>')
         
         # Create a MIMEMultipart message
         message = MIMEMultipart("alternative")
@@ -68,7 +78,7 @@ class NotificationManager:
         smtp.login(FROM_EMAIL, PASSWORD)
 
         smtp.sendmail(FROM_EMAIL, TO_EMAIL_1, message.as_string())
-        # smtp.sendmail(FROM_EMAIL, TO_EMAIL_2, message.as_string())
+        smtp.sendmail(FROM_EMAIL, TO_EMAIL_2, message.as_string())
         
         smtp.quit()
 
