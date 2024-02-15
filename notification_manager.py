@@ -78,7 +78,7 @@ class NotificationManager:
         smtp.login(FROM_EMAIL, PASSWORD)
 
         smtp.sendmail(FROM_EMAIL, TO_EMAIL_1, message.as_string())
-        smtp.sendmail(FROM_EMAIL, TO_EMAIL_2, message.as_string())
+        # smtp.sendmail(FROM_EMAIL, TO_EMAIL_2, message.as_string())
         
         smtp.quit()
 

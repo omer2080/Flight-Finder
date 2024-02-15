@@ -26,6 +26,7 @@ class FlightSearch:
         if destination_iata_code == 'BKK' or destination_iata_code == 'SYD':
             min_nights = 10
             max_nights = 20
+            stopovers = 2
         headers = {"apikey": my_api}
         query = {
             "fly_from": origin_iata_code,
@@ -56,8 +57,8 @@ class FlightSearch:
         flight_data = FlightData(
             price = flight_data_list["price"],
             origin_city = "Tel Aviv",
-            destination_city = flight_data_list["route"][0]["cityTo"],
-            destination_airport = flight_data_list["route"][0]["flyTo"],
+            destination_city = flight_data_list["cityTo"],
+            destination_airport = flight_data_list["flyTo"],
             depart_date = flight_data_list["route"][0]["local_departure"].split("T")[0],
             return_date = flight_data_list["route"][1]["local_departure"].split("T")[0],
             flight_link = flight_data_list["booking_token"]
