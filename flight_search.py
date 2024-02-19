@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 
 from flight_data import FlightData
+from distance_calculator import DistanceCalculator
 
 load_dotenv()
 
@@ -22,11 +23,19 @@ class FlightSearch:
         code = results[0]["code"]
         return code
 
-    def check_flights(self, origin_iata_code, destination_iata_code, min_nights, max_nights, num_of_cheapests_flights_per_city, fly_date_from, fly_date_to, stopovers, currency, max_price_to_pay):
-        if destination_iata_code == 'BKK' or destination_iata_code == 'SYD':
+    def check_flights(self, origin_iata_code, destination_city, destination_country, destination_iata_code, min_nights, max_nights, num_of_cheapests_flights_per_city, fly_date_from, fly_date_to, stopovers, currency, max_price_to_pay):
+        
+        distance_calculator = DistanceCalculator()
+        destination_location = f"{destination_city}, {destination_country}"
+        distance = distance_calculator.calculate_distance("Tel Aviv", destination_location)
+        # print(f'\nThe distance from {destination_city} to Tel Aviv is {distance:.2f} kilometers.\n')
+        
+        if distance > 4500:
             min_nights = 10
             max_nights = 20
             stopovers = 2
+        #else staying with default settings
+        
         headers = {"apikey": my_api}
         query = {
             "fly_from": origin_iata_code,
@@ -60,7 +69,7 @@ class FlightSearch:
             destination_city = flight_data_list["cityTo"],
             destination_airport = flight_data_list["flyTo"],
             depart_date = flight_data_list["route"][0]["local_departure"].split("T")[0],
-            return_date = flight_data_list["route"][max(1, len(flight_data_list["route"]) - 1)]["local_departure"].split("T")[0],
+            return_date = flight_data_list["route"][max(1, len(flight_data_list["route"]) - 1)]["local_departure"].split("T")[0], #the maximum is for flights with connections
             flight_link = flight_data_list["booking_token"]
         )
         print(f"{flight_data.destination_city}: ${flight_data.price}")
